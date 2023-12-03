@@ -16,21 +16,21 @@ class Database
             die("Database connection failed: " . $e->getMessage());
         }
     }
-
+//method
     public function executeQuery($query, $params = [])
     {
         $statement = $this->pdo->prepare($query);
         $statement->execute($params);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
+//method
     public function insertDiaryEntry($date, $log)
     {
         $query = "INSERT INTO logs (date, logs) VALUES (:date, :log)";
         $params = [':date' => $date, ':log' => $log];
         $this->executeQuery($query, $params);
     }
-
+// object / function
     public function getDiaryEntries()
     {
         $query = 'SELECT * FROM logs ORDER BY id DESC';
@@ -46,7 +46,7 @@ class Diary
     {
         $this->db = $db;
     }
-
+ // method
     public function addDiaryEntry($date, $log)
     {
         $date = trim($date);
@@ -55,7 +55,7 @@ class Diary
         if (empty($date) || empty($log)) {
             return "Date and log are required.";
         }
-
+// inheitance, inherited from database class
         $this->db->insertDiaryEntry($date, $log);
     }
 }
@@ -82,48 +82,29 @@ $data = $db->getDiaryEntries();
 ?>
 
 <head>
+<title>welcome to my Diarysystem</title>
+<link rel="stylesheet" type ="text/css" href="style.css">
+
+</head>
+
 <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            text-align: center;
-        }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            color: #333;
-        }
-        label, textarea {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007BFF;
+        .btnlogout {
+            display: inline-block;
+            background-color: #d9534f;
             color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .btnlogout:hover {
+            background-color: #c9302c;
         }
     </style>
-</head>
+    
 <body>
+            <a class="btnlogout" href="http://localhost/login.system/index.php">Logout</a>
     <div class="container">
         <h1>Personal Diary</h1>
         <form action="" method="POST">
